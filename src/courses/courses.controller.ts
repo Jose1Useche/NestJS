@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
@@ -9,16 +9,19 @@ export class CoursesController {
 
   @Post()
   create(@Body() createCourseDto: CreateCourseDto) {
+    console.log('Body: ', createCourseDto);
     return this.coursesService.create(createCourseDto);
   }
 
   @Get()
-  findAll() {
+  findAll(@Query() query: string) {
+    console.log('Queryparams: ', query);
     return this.coursesService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
+    console.log('Params: ', id)
     return this.coursesService.findOne(+id);
   }
 
