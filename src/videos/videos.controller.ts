@@ -2,7 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, Validation
 import { VideosService } from './videos.service';
 import { CreateVideoDto } from './dto/create-video.dto';
 import { UpdateVideoDto } from './dto/update-video.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('videos')
 @Controller('videos')
 // @UsePipes(new ValidationPipe())
 export class VideosController {
