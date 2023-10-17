@@ -19,6 +19,7 @@ export class CoursesController {
   @Get()
   findAll(@Query() query: string) {
     console.log('Queryparams: ', query);
+    console.log('imprimiendo ENV: ', process.env.ENV_TEST);
     return this.coursesService.findAll();
   }
 
