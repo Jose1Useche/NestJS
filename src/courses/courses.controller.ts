@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, HttpException, HttpStatus, ParseIntPipe } from '@nestjs/common';
 import { CoursesService } from './courses.service';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
@@ -21,12 +21,13 @@ export class CoursesController {
     console.log('Queryparams: ', query);
     console.log('imprimiendo ENV: ', process.env.ENV_TEST);
     return this.coursesService.findAll();
+    // throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', new ParseIntPipe({ errorHttpStatusCode: HttpStatus.NOT_ACCEPTABLE})) id: number) {
     console.log('Params: ', id)
-    return this.coursesService.findOne(+id);
+    return this.coursesService.findOne(id);
   }
 
   @Patch(':id')
