@@ -6,7 +6,7 @@ export class CreateVideoDto {
     title: string;
 
     @IsNumber()
-    description: number;
+    description: string;
 
     @IsUrl()
     src: string;
