@@ -17,8 +17,8 @@ export class Course {
   @Prop()
   cover: string;
 
-  @Prop()
-  idAuthor: mongoose.Types.ObjectId
+  // @Prop()
+  // idAuthor: mongoose.Types.ObjectId
 }
 
 export const CourseSchema = SchemaFactory.createForClass(Course);
