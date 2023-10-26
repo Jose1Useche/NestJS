@@ -6,9 +6,12 @@ export type UserDocument = HydratedDocument<User>;
 
 @Schema({ timestamps: true }) //El timestamps agrega createdAt and updatedAt al documento
 export class User {
-  @Prop({ unique: true, required: true, type: String, trim: true, lowercase: true })
+  @Prop({ unique: true, required: true, trim: true, lowercase: true })
   @IsEmail()
   email: string;
+
+  @Prop()
+  name: string;
 
   @Prop()
   password: string;
