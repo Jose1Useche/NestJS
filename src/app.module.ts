@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { VideosModule } from './videos/videos.module';
 import { AwardsModule } from './awards/awards.module';
 import { UsersModule } from './users/users.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -20,6 +21,13 @@ import { UsersModule } from './users/users.module';
     ConfigModule.forRoot({
       envFilePath: 'config/.env'
     }),
+    JwtModule.register(
+      {
+        global: true,
+        secret: process.env.JWT_SECRET_KEY,
+        signOptions: { expiresIn: '60s' },
+      }
+    ),
     MongooseModule.forRoot(process.env.MONGO_DEV),
     CoursesModule, 
     AuthModule, 
