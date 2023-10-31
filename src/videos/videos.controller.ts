@@ -9,7 +9,8 @@ import {
   UsePipes, 
   ValidationPipe,
   UseInterceptors, 
-  UploadedFile 
+  UploadedFile, 
+  UseGuards
 } from '@nestjs/common';
 import { VideosService } from './videos.service';
 import { CreateVideoDto } from './dto/create-video.dto';
@@ -18,9 +19,11 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { LoggerInterceptor } from 'src/utilities/logger/logger.interceptor';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { storage } from 'src/utilities/media.handler';
+import { AuthGuard } from 'src/guards/auth/auth.guard';
 
 @ApiTags('videos')
 @UseInterceptors(LoggerInterceptor)
+@UseGuards(AuthGuard)
 @Controller('videos')
 // @UsePipes(new ValidationPipe())
 export class VideosController {
