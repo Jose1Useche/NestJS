@@ -28,7 +28,7 @@ export class AuthService {
         if (userToCheck) {
             const isValidated = await validateUser(userLogin.password, userToCheck.password);
             if (isValidated) {
-                const payload = { id: userToCheck._id, username: userToCheck.name };
+                const payload = { id: userToCheck._id, username: userToCheck.name, roles: userToCheck.roles };
                 return { access_token: await this.jwtService.signAsync(payload) };
             } else {
                 return 'Incorrect Password';

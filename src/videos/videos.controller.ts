@@ -20,10 +20,11 @@ import { LoggerInterceptor } from 'src/utilities/logger/logger.interceptor';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { storage } from 'src/utilities/media.handler';
 import { AuthGuard } from 'src/guards/auth/auth.guard';
+import { RolesGuard } from 'src/guards/roles/roles.guard';
 
 @ApiTags('videos')
 @UseInterceptors(LoggerInterceptor)
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard, RolesGuard)
 @Controller('videos')
 // @UsePipes(new ValidationPipe())
 export class VideosController {
