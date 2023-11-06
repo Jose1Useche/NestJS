@@ -10,7 +10,8 @@ import {
   ValidationPipe,
   UseInterceptors, 
   UploadedFile, 
-  UseGuards
+  UseGuards,
+  SetMetadata
 } from '@nestjs/common';
 import { VideosService } from './videos.service';
 import { CreateVideoDto } from './dto/create-video.dto';
@@ -45,11 +46,13 @@ export class VideosController {
   }
 
   @Get()
+  @SetMetadata('rol',['admin'])
   findAll() {
     return this.videosService.findAll();
   }
 
   @Get(':id')
+  @SetMetadata('rol',['manager'])
   findOne(@Param('id') id: string) {
     return this.videosService.findOne(+id);
   }
