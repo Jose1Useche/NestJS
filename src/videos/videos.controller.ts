@@ -22,6 +22,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { storage } from 'src/utilities/media.handler';
 import { AuthGuard } from 'src/guards/auth/auth.guard';
 import { RolesGuard } from 'src/guards/roles/roles.guard';
+import { Roles } from 'src/utilities/decorators/roles/roles.decorator';
 
 @ApiTags('videos')
 @UseInterceptors(LoggerInterceptor)
@@ -46,13 +47,15 @@ export class VideosController {
   }
 
   @Get()
-  @SetMetadata('rol',['admin'])
+  // @SetMetadata('rol',['admin'])
+  @Roles(['admin'])
   findAll() {
     return this.videosService.findAll();
   }
 
   @Get(':id')
-  @SetMetadata('rol',['manager'])
+  // @SetMetadata('rol',['manager'])
+  @Roles(['manager'])
   findOne(@Param('id') id: string) {
     return this.videosService.findOne(+id);
   }
