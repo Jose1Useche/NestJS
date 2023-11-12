@@ -6,21 +6,27 @@ import { RegisterAuthDto } from './dto/register-auth-dto';
 import { generateHash, validateUser } from 'src/utilities/security/bcryptHandler';
 import { LoginAuthDto } from './dto/login-auth.dto';
 import { JwtService } from '@nestjs/jwt';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class AuthService {
     constructor
     (
         @InjectModel(User.name) private readonly userModel: Model<User>,
-        private jwtService: JwtService
-
+        private jwtService: JwtService,
+        private eventEmitter: EventEmitter2
     ) {}
 
     async create(registerAuthDto: RegisterAuthDto): Promise<User> {
         const { password, ...newUser } = registerAuthDto;
         const userHashed = { ...newUser, password: await generateHash(password) }
         const newRegister = new this.userModel(userHashed);
-        return await newRegister.save();
+
+        const userSaved = await newRegister.save();
+
+        this.eventEmitter.emit('user.created', userSaved);
+
+        return userSaved;
     }
 
     async login(userLogin: LoginAuthDto): Promise<any> {
