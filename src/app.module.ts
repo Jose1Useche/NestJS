@@ -31,7 +31,13 @@ import { EventMailModule } from './event-mail/event-mail.module';
         signOptions: { expiresIn: '3000s' },
       }
     ),
-    MongooseModule.forRoot(process.env.MONGO_DEV),
+    MongooseModule.forRoot(process.env.MONGO_DEV, {
+      connectionFactory: (connection) => {
+        const pluginOption = { overrideMethods: 'all' };
+        connection.plugin(require('mongoose-delete'), pluginOption);
+        return connection;
+      }
+    }),
     CoursesModule, 
     AuthModule, 
     VideosModule, 
